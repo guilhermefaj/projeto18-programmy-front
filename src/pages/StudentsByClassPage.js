@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import apiStudents from "../services/apiStudents";
 import { useParams } from "react-router-dom";
 import apiClasses from "../services/apiClasses";
 
-export default function StudentsPage() {
+export default function StudentsByClassPage() {
     const { classId } = useParams();
     const [students, setStudents] = useState([]);
     const [className, setClassName] = useState("");
 
     useEffect(() => {
-        apiStudents
+        apiClasses
             .showStudentsByClass(classId)
             .then((res) => {
                 setStudents(res.data);

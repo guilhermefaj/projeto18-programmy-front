@@ -7,12 +7,19 @@ function postStudent(body) {
     return promise;
 }
 
-function showStudentsByClass(classId) {
+function getStudent(studentId) {
     const promise = axios.get(
-        `${process.env.REACT_APP_API_URL}/students/${classId}`
-    )
+        `${process.env.REACT_APP_API_URL}/students/${studentId}`
+    );
     return promise;
 }
 
-const apiStudents = { postStudent, showStudentsByClass }
+function showClassesByStudent(studentId) {
+    const promise = axios.get(
+        `${process.env.REACT_APP_API_URL}/students/${studentId}/classes`
+    );
+    return promise;
+}
+
+const apiStudents = { postStudent, getStudent, showClassesByStudent }
 export default apiStudents;

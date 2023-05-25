@@ -5,5 +5,12 @@ function showClasses() {
     return promise;
 }
 
-const apiClasses = { showClasses }
+function showStudentsByClass(classId) {
+    const promise = axios.get(
+        `${process.env.REACT_APP_API_URL}/classes/${classId}`
+    )
+    return promise;
+}
+
+const apiClasses = { showStudentsByClass, showClasses }
 export default apiClasses;
