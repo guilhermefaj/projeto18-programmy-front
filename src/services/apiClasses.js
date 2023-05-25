@@ -5,5 +5,5 @@ function showClasses() {
     return promise;
 }
 
-const apiItems = { showClasses }
-export default apiItems;
+const apiClasses = { showClasses }
+export default apiClasses;

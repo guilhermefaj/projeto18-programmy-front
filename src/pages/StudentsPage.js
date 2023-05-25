@@ -1,33 +1,44 @@
-import { useEffect, useState } from "react"
-import apiItems from "../services/apiItems"
+import { useEffect, useState } from "react";
+import apiStudents from "../services/apiStudents";
+import { useParams } from "react-router-dom";
+import apiClasses from "../services/apiClasses";
 
 export default function StudentsPage() {
-    const [classes, setClasses] = useState([])
+    const { classId } = useParams();
+    const [students, setStudents] = useState([]);
+    const [className, setClassName] = useState("");
 
     useEffect(() => {
-        apiItems.showClasses()
-            .then(res => {
-                console.log(res.data);
-                const apiClasses = res.data;
-                setClasses(apiClasses)
+        apiStudents
+            .showStudentsByClass(classId)
+            .then((res) => {
+                setStudents(res.data);
             })
-            .catch(err => {
-                console.log(err.response)
+            .catch((err) => {
+                console.log(err.response);
+            });
+
+        apiClasses
+            .showClasses()
+            .then((res) => {
+                const classData = res.data.find((item) => item.id === Number(classId));
+                if (classData) {
+                    setClassName(classData.code);
+                }
             })
-    }, [])
+            .catch((err) => {
+                console.log(err.response);
+            });
+    }, [classId]);
 
     return (
-        <>
-            <div>
-                {classes.map((classItem) => (
-                    <div key={classItem.id}>
-                        <p>Turma: {classItem.code}</p>
-                    </div>
+        <div>
+            <h2>Estudantes da turma {className}</h2>
+            <ul>
+                {students.map((student) => (
+                    <li key={student.id}>{student.name}</li>
                 ))}
-            </div>
-            <div>
-
-            </div>
-        </>
-    )
+            </ul>
+        </div>
+    );
 }
