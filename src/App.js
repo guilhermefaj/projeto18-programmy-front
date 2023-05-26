@@ -4,6 +4,7 @@ import RegisterPage from "./pages/RegisterPage";
 import StudentsByClassPage from "./pages/StudentsByClassPage";
 import SingleStudentPage from "./pages/SingleStudentPage";
 import SendProjectForm from "./pages/SendProjectPage";
+import ProjectsPage from "./pages/ProjectsPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/classes/:classId" element={<StudentsByClassPage />} />
         <Route path="/students/:studentId" element={<SingleStudentPage />} />
         <Route path="/submit" element={<SendProjectForm />} />
+        <Route path="/projects/:id/:classId" element={<ProjectsPage />} />
       </Routes>
     </BrowserRouter>
   );
