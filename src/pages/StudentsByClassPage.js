@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import apiClasses from "../services/apiClasses";
+import styled from "styled-components";
 
 export default function StudentsByClassPage() {
     const { classId } = useParams();
@@ -11,7 +12,10 @@ export default function StudentsByClassPage() {
         apiClasses
             .showStudentsByClass(classId)
             .then((res) => {
-                setStudents(res.data);
+                const sortedStudents = res.data.sort((a, b) =>
+                    a.name.localeCompare(b.name)
+                );
+                setStudents(sortedStudents);
             })
             .catch((err) => {
                 console.log(err.response);
@@ -31,13 +35,58 @@ export default function StudentsByClassPage() {
     }, [classId]);
 
     return (
-        <div>
-            <h2>Estudantes da turma {className}</h2>
-            <ul>
+        <Container>
+            <Title>Estudantes da turma {className}</Title>
+            <StudentList>
                 {students.map((student) => (
-                    <li key={student.id}>{student.name}</li>
+                    <StudentItem to={`/students/${student.id}`} key={student.id}>{student.name}</StudentItem>
                 ))}
-            </ul>
-        </div>
+            </StudentList>
+        </Container>
     );
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: calc(100vh - 60px);
+  padding: 20px;
+  background-color: #f3f3f3;
+`;
+
+const Title = styled.h2`
+  margin-bottom: 20px;
+  font-family: "Silkscreen";
+  font-size: 24px;
+  color: #333;
+`;
+
+const StudentList = styled.ul`
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  gap: 10px;
+`;
+
+const StudentItem = styled(Link)`
+  position: relative;
+  width: 100%;
+  padding: 12px;
+  background-color: #56d0ae;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-family: "Roboto";
+  font-size: 16px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #07b77f;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+`;

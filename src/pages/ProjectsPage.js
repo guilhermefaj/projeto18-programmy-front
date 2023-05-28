@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import apiClasses from "../services/apiClasses";
 import apiProjects from "../services/apiProjects";
+import styled from "styled-components";
 
 export default function ProjectsPage() {
     const { classId, id: projectId } = useParams();
@@ -68,10 +69,10 @@ export default function ProjectsPage() {
     };
 
     return (
-        <div>
-            <h2>Estudantes da turma {className}</h2>
-            <h3>Projeto: {projectName}</h3>
-            <table>
+        <Container>
+            <Title>Estudantes da turma {className}</Title>
+            <ProjectTitle>Projeto: {projectName}</ProjectTitle>
+            <Table>
                 <thead>
                     <tr>
                         <th>Aluno</th>
@@ -86,8 +87,48 @@ export default function ProjectsPage() {
                         </tr>
                     ))}
                 </tbody>
-            </table>
-        </div>
+            </Table>
+        </Container>
     );
 }
 
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f3f3f3;
+`;
+
+const Title = styled.h2`
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+`;
+
+const ProjectTitle = styled.h3`
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #666;
+`;
+
+const Table = styled.table`
+    width: 100%;
+    max-width: 600px;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ccc;
+    }
+
+    th {
+        font-weight: bold;
+        color: #333;
+    }
+`;

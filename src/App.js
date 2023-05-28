@@ -5,10 +5,12 @@ import StudentsByClassPage from "./pages/StudentsByClassPage";
 import SingleStudentPage from "./pages/SingleStudentPage";
 import SendProjectForm from "./pages/SendProjectPage";
 import ProjectsPage from "./pages/ProjectsPage";
+import Header from "./components/Header/Header";
 
 function App() {
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route path="/students/register" element={<RegisterPage />} />
         <Route path="/classes" element={<ClassesPage />} />

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import apiClasses from '../services/apiClasses';
 import apiStudents from '../services/apiStudents';
 import apiProjects from '../services/apiProjects';
+import styled from 'styled-components';
 
 export default function SendProjectPage() {
     const [classes, setClasses] = useState([]);
@@ -14,9 +15,8 @@ export default function SendProjectPage() {
 
     // Carregar turmas, alunos e projetos
     useEffect(() => {
-        console.log("turma selecionada:", selectedClass)
-        // Carregar turmas
-        apiClasses.showClasses()
+        apiClasses
+            .showClasses()
             .then((res) => {
                 setClasses(res.data);
             })
@@ -25,7 +25,8 @@ export default function SendProjectPage() {
             });
 
         if (selectedClass) {
-            apiStudents.studentsByClass(selectedClass)
+            apiStudents
+                .studentsByClass(selectedClass)
                 .then((res) => {
                     setStudents(res.data);
                     console.log("lista de alunos:", students)
@@ -34,8 +35,8 @@ export default function SendProjectPage() {
                     console.log(err.response);
                 });
 
-            // Carregar projetos
-            apiProjects.showProjectsByClassId(selectedClass)
+            apiProjects
+                .showProjectsByClassId(selectedClass)
                 .then((res) => {
                     setProjects(res.data);
                     console.log(projects);
@@ -44,7 +45,6 @@ export default function SendProjectPage() {
                     console.log(err.response);
                 });
         }
-
     }, [selectedClass]);
 
     // Manipuladores de eventos
@@ -84,7 +84,8 @@ export default function SendProjectPage() {
         };
 
         // Enviar o projeto para o backend
-        apiProjects.createProject(projectData)
+        apiProjects
+            .createProject(projectData)
             .then((res) => {
                 console.log('Projeto enviado com sucesso!');
                 // Lógica adicional após o envio do projeto, se necessário
@@ -95,39 +96,39 @@ export default function SendProjectPage() {
     };
 
     return (
-        <div>
-            <h2>Enviar Projeto</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="class">Turma:</label>
-                    <select id="class" value={selectedClass} onChange={handleClassChange}>
+        <Container>
+            <Title>Enviar Projeto</Title>
+            <Form onSubmit={handleSubmit}>
+                <FormGroup>
+                    <Label htmlFor="class">Turma:</Label>
+                    <Select id="class" value={selectedClass} onChange={handleClassChange}>
                         <option value="">Selecione a turma</option>
                         {classes.map((classItem) => (
                             <option key={classItem.id} value={classItem.id}>
                                 {classItem.code}
                             </option>
                         ))}
-                    </select>
-                </div>
-                <div>
-                    <label htmlFor="student">Aluno:</label>
-                    <select
+                    </Select>
+                </FormGroup>
+                <FormGroup>
+                    <Label htmlFor="student">Aluno:</Label>
+                    <Select
                         id="student"
                         value={selectedStudent}
                         onChange={handleStudentChange}
                         disabled={!selectedClass}
                     >
                         <option value="">Selecione o aluno</option>
-                        {students.map((studentName, index) => (
+                        {students.map((student, index) => (
                             <option key={index} value={index}>
-                                {studentName}
+                                {student}
                             </option>
                         ))}
-                    </select>
-                </div>
-                <div>
-                    <label htmlFor="project">Projeto:</label>
-                    <select
+                    </Select>
+                </FormGroup>
+                <FormGroup>
+                    <Label htmlFor="project">Projeto:</Label>
+                    <Select
                         id="project"
                         value={selectedProject}
                         onChange={handleProjectChange}
@@ -135,28 +136,99 @@ export default function SendProjectPage() {
                     >
                         <option value="">Selecione o projeto</option>
                         {projects.length > 0 &&
-                            projects.map((projectName, index) => (
+                            projects.map((project, index) => (
                                 <option key={index} value={index}>
-                                    {projectName}
+                                    {project}
                                 </option>
                             ))}
-                    </select>
-                </div>
-                <div>
-                    <label htmlFor="link">Link do Projeto:</label>
-                    <input
+                    </Select>
+                </FormGroup>
+                <FormGroup>
+                    <Label htmlFor="link">Link do Projeto:</Label>
+                    <Input
                         type="text"
                         id="link"
                         value={projectLink}
                         onChange={handleLinkChange}
                         disabled={!selectedClass}
                     />
-                </div>
-                <button
-                    type="submit"
-                    disabled={!selectedClass}
-                >Enviar</button>
-            </form>
-        </div>
+                </FormGroup>
+                <Button type="submit" disabled={!selectedClass}>
+                    Enviar
+                </Button>
+            </Form>
+        </Container>
     );
 }
+
+const Container = styled.div`
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: red;
+`;
+
+const Title = styled.h2`
+    margin-bottom: 20px;
+    font-family: "Silkscreen";
+    font-size: 24px;
+    color: #333;
+`;
+
+const Form = styled.form`
+    width: 100%;
+    max-width: 400px;
+`;
+
+const FormGroup = styled.div`
+    margin-bottom: 20px;
+`;
+
+const Label = styled.label`
+    display: block;
+    margin-bottom: 5px;
+    font-family: "Silkscreen";
+    font-size: 16px;
+    color: #333;
+`;
+
+const Select = styled.select`
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+`;
+
+const Input = styled.input`
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+`;
+
+const Button = styled.button`
+    width: 100%;
+    padding: 12px;
+    background-color: #56d0ae;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: #275145;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+`;
