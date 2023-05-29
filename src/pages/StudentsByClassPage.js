@@ -112,7 +112,8 @@ const ProjectItem = styled(Link)`
   width: 100%;
   min-width: 200px;
   text-align: center;
-  height: 40px;
+  min-height: 40px;
+  max-height: fit-content;
   padding: 12px;
   background-color: #56d0ae;
   color: #fff;

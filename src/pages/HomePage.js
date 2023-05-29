@@ -2,18 +2,18 @@ import { Link } from "react-router-dom"
 import { styled } from "styled-components"
 
 export default function HomePage() {
-    return (
-        <Container>
-            <RowContainer>
-                <StyledLink to="/students/register">Realizar Registro de aluno</StyledLink>
-                <StyledLink to="/classes">Acessar Turmas</StyledLink>
-            </RowContainer>
-            <RowContainer>
-                <StyledLink to="/submit">Envio de Projetos</StyledLink>
-                <StyledLink>Em Breve...</StyledLink>
-            </RowContainer>
-        </Container>
-    );
+  return (
+    <Container>
+      <RowContainer>
+        <StyledLink to="/students/register">Realizar Registro de aluno</StyledLink>
+        <StyledLink to="/classes">Acessar Turmas</StyledLink>
+      </RowContainer>
+      <RowContainer>
+        <StyledLink to="/submit">Envio de Projetos</StyledLink>
+        <StyledLink>Em Breve... (Portal do Aluno)</StyledLink>
+      </RowContainer>
+    </Container>
+  );
 }
 
 const Container = styled.div`

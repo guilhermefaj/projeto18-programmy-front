@@ -4,30 +4,30 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export default function ClassesPage() {
-    const [classes, setClasses] = useState([]);
+  const [classes, setClasses] = useState([]);
 
-    useEffect(() => {
-        apiClasses
-            .showClasses()
-            .then((res) => {
-                const apiClasses = res.data;
-                setClasses(apiClasses);
-            })
-            .catch((err) => {
-                console.log(err.response);
-            });
-    }, []);
+  useEffect(() => {
+    apiClasses
+      .showClasses()
+      .then((res) => {
+        const apiClasses = res.data;
+        setClasses(apiClasses);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  }, []);
 
-    return (
-        <Container>
-            <Title>Selecione uma Turma</Title>
-            {classes.map((classItem) => (
-                <ClassItem to={`/classes/${classItem.id}`} key={classItem.id}>
-                    <p>Turma: {classItem.code}</p>
-                </ClassItem>
-            ))}
-        </Container>
-    );
+  return (
+    <Container>
+      <Title>Selecione uma Turma</Title>
+      {classes.map((classItem) => (
+        <ClassItem to={`/classes/${classItem.id}`} key={classItem.id}>
+          <p>{classItem.code}</p>
+        </ClassItem>
+      ))}
+    </Container>
+  );
 }
 
 const Container = styled.div`

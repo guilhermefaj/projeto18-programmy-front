@@ -14,12 +14,11 @@ export default function Header() {
       .then((res) => {
         const apiClasses = res.data;
         setClasses(apiClasses);
-        console.log(classes);
       })
       .catch((err) => {
         console.log(err.response);
       });
-  }, []);
+  }, [showClasses]);
 
   const handleMouseEnter = () => {
     setShowClasses(true);
@@ -53,7 +52,7 @@ export default function Header() {
             </Dropdown>
           )}
         </NavItem>
-        <NavItem to="/submit">Projetos</NavItem>
+        <NavItem to="/submit">Enviar</NavItem>
       </Navigation>
     </HeaderContainer>
   );
@@ -96,12 +95,13 @@ const NavItem = styled(Link)`
 const Dropdown = styled.div`
   position: absolute;
   font-family: "Roboto";
-  width: 100%;
+  width: 120px;
   border-radius: 5px;
   text-align: center;
   gap: 5px;
   top: 100%;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   background-color: #f8f8f8;
@@ -113,6 +113,8 @@ const DropdownItem = styled(Link)`
   color: #555;
   text-decoration: none;
   transition: color 0.3s ease;
+  display: inline-block;
+  position: relative;
 
   &:hover {
     color: white;
