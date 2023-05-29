@@ -22,7 +22,6 @@ export default function SingleStudentPage() {
       .showClassesByStudent(studentId)
       .then((res) => {
         setClasses(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err.response);

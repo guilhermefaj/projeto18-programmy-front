@@ -3,10 +3,10 @@ import ClassesPage from "./pages/ClassesPage";
 import RegisterPage from "./pages/RegisterPage";
 import StudentsByClassPage from "./pages/StudentsByClassPage";
 import SingleStudentPage from "./pages/SingleStudentPage";
-import SendProjectForm from "./pages/SendProjectPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import Header from "./components/Header/Header";
 import HomePage from "./pages/HomePage";
+import SendProjectPage from "./pages/SendProjectPage";
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
         <Route path="/classes" element={<ClassesPage />} />
         <Route path="/classes/:classId" element={<StudentsByClassPage />} />
         <Route path="/students/:studentId" element={<SingleStudentPage />} />
-        <Route path="/submit" element={<SendProjectForm />} />
+        <Route path="/submit" element={<SendProjectPage />} />
         <Route path="/projects/:id/:classId" element={<ProjectsPage />} />
       </Routes>
     </BrowserRouter>

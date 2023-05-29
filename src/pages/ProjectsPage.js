@@ -12,17 +12,18 @@ export default function ProjectsPage() {
     const [studentGrades, setStudentGrades] = useState([]);
 
     useEffect(() => {
-        // Carregar estudantes da turma
         apiClasses
             .showStudentsByClass(classId)
             .then((res) => {
-                setStudents(res.data);
+                const sortedStudents = res.data.sort((a, b) =>
+                    a.name.localeCompare(b.name)
+                );
+                setStudents(sortedStudents);
             })
             .catch((err) => {
                 console.log(err.response);
             });
 
-        // Obter nome da turma
         apiClasses
             .showClasses()
             .then((res) => {
@@ -35,7 +36,6 @@ export default function ProjectsPage() {
                 console.log(err.response);
             });
 
-        // Obter nome do projeto
         apiProjects
             .showProject(projectId)
             .then((res) => {
@@ -45,7 +45,6 @@ export default function ProjectsPage() {
                 console.log(err.response);
             });
 
-        // Obter notas dos alunos no projeto
         if (projectId) {
             apiProjects
                 .getGradesByProject(projectId)
@@ -62,7 +61,6 @@ export default function ProjectsPage() {
         }
     }, [classId, projectId]);
 
-    // Função para obter a nota de um aluno específico
     const getGradeByStudentId = (studentId) => {
         const grade = studentGrades[studentId];
         return grade || "Sem Nota";
@@ -94,13 +92,15 @@ export default function ProjectsPage() {
 
 const Container = styled.div`
     display: flex;
+    height: calc(100vh - 60px);
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    background-color: #f3f3f3;
+    background-color: #f8f8f8;
 `;
 
 const Title = styled.h2`
+    font-family: "Silkscreen";
     margin-bottom: 20px;
     font-size: 24px;
     color: #333;

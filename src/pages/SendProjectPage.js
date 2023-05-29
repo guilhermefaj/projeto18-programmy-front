@@ -13,7 +13,6 @@ export default function SendProjectPage() {
     const [projectLink, setProjectLink] = useState('');
     const [projects, setProjects] = useState([]);
 
-    // Carregar turmas, alunos e projetos
     useEffect(() => {
         apiClasses
             .showClasses()
@@ -29,7 +28,6 @@ export default function SendProjectPage() {
                 .studentsByClass(selectedClass)
                 .then((res) => {
                     setStudents(res.data);
-                    console.log("lista de alunos:", students)
                 })
                 .catch((err) => {
                     console.log(err.response);
@@ -39,7 +37,6 @@ export default function SendProjectPage() {
                 .showProjectsByClassId(selectedClass)
                 .then((res) => {
                     setProjects(res.data);
-                    console.log(projects);
                 })
                 .catch((err) => {
                     console.log(err.response);
@@ -138,7 +135,7 @@ export default function SendProjectPage() {
                         {projects.length > 0 &&
                             projects.map((project, index) => (
                                 <option key={index} value={index}>
-                                    {project}
+                                    {project.projectName}
                                 </option>
                             ))}
                     </Select>
@@ -163,11 +160,11 @@ export default function SendProjectPage() {
 
 const Container = styled.div`
     display: flex;
-    height: 100%;
+    height: calc(100vh - 60px);
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    background-color: red;
+    background-color: #f8f8f8;
 `;
 
 const Title = styled.h2`
