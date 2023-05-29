@@ -4,66 +4,67 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 export default function SingleStudentPage() {
-    const [student, setStudent] = useState(null);
-    const [classes, setClasses] = useState([]);
-    const { studentId } = useParams();
+  const [student, setStudent] = useState(null);
+  const [classes, setClasses] = useState([]);
+  const { studentId } = useParams();
 
-    useEffect(() => {
-        apiStudents
-            .getStudent(studentId)
-            .then((res) => {
-                setStudent(res.data);
-            })
-            .catch((err) => {
-                console.log(err.response);
-            });
+  useEffect(() => {
+    apiStudents
+      .getStudent(studentId)
+      .then((res) => {
+        setStudent(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
 
-        apiStudents
-            .showClassesByStudent(studentId)
-            .then((res) => {
-                setClasses(res.data);
-                console.log(res.data);
-            })
-            .catch((err) => {
-                console.log(err.response);
-            });
-    }, [studentId]);
+    apiStudents
+      .showClassesByStudent(studentId)
+      .then((res) => {
+        setClasses(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  }, [studentId]);
 
-    if (!student) {
-        return <div>Loading...</div>;
-    }
+  if (!student) {
+    return <div>Loading...</div>;
+  }
 
-    const { name, email, cpf, photo, classIds } = student;
+  const { name, email, cpf, photo, classIds } = student;
 
-    const enrolledClasses = classes.filter((classItem) => classIds.includes(Number(classItem.id)));
+  const enrolledClasses = classes.filter((classItem) => classIds.includes(Number(classItem.id)));
 
-    return (
-        <Container>
-            <StudentInfo>
-                <StudentName>{name}</StudentName>
-                <StudentData>Email: {email}</StudentData>
-                <StudentData>CPF: {cpf}</StudentData>
-                <StudentPhoto src={photo} alt="Student Photo" />
-            </StudentInfo>
+  return (
+    <Container>
+      <StudentInfo>
+        <StudentPhoto src={photo} alt="Student Photo" />
+        <StudentName>{name}</StudentName>
+        <StudentData>Email: {email}</StudentData>
+        <StudentData>CPF: {cpf}</StudentData>
+      </StudentInfo>
 
-            <ClassList>
-                <h3>Turmas</h3>
-                <ul>
-                    {enrolledClasses.map((classItem) => (
-                        <ClassItem key={classItem.id}>
-                            <ClassData>Código: {classItem.code}</ClassData>
-                            <ClassData>Data de início: {classItem.startDate}</ClassData>
-                            <ClassData>Data de término: {classItem.endDate}</ClassData>
-                        </ClassItem>
-                    ))}
-                </ul>
-            </ClassList>
-        </Container>
-    );
+      <ClassList>
+        <h3>Turmas</h3>
+        <ul>
+          {enrolledClasses.map((classItem) => (
+            <ClassItem key={classItem.id}>
+              <ClassData>Código: {classItem.code}</ClassData>
+              <ClassData>Data de início: {classItem.startDate}</ClassData>
+              <ClassData>Data de término: {classItem.endDate}</ClassData>
+            </ClassItem>
+          ))}
+        </ul>
+      </ClassList>
+    </Container>
+  );
 }
 
 const Container = styled.div`
   display: flex;
+  height: calc(100vh - 60px);
   flex-direction: column;
   align-items: center;
   padding: 20px;
@@ -77,6 +78,8 @@ const StudentInfo = styled.div`
 
 const StudentName = styled.h2`
   margin-bottom: 10px;
+  font-family: "Silkscreen";
+  font-weight: bold;
   font-size: 24px;
   color: #333;
 `;

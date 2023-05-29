@@ -74,6 +74,9 @@ const StudentList = styled.ul`
 const StudentItem = styled(Link)`
   position: relative;
   width: 100%;
+  min-width: 200px;
+  text-align: center;
+  height: 40px;
   padding: 12px;
   background-color: #56d0ae;
   color: #fff;
@@ -88,5 +91,6 @@ const StudentItem = styled(Link)`
   &:hover {
     background-color: #07b77f;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
   }
 `;

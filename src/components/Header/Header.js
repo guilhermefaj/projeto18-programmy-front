@@ -5,58 +5,58 @@ import apiClasses from "../../services/apiClasses";
 
 
 export default function Header() {
-    const [showClasses, setShowClasses] = useState(false);
-    const [classes, setClasses] = useState([]);
+  const [showClasses, setShowClasses] = useState(false);
+  const [classes, setClasses] = useState([]);
 
-    useEffect(() => {
-        apiClasses
-            .showClasses()
-            .then((res) => {
-                const apiClasses = res.data;
-                setClasses(apiClasses);
-                console.log(classes);
-            })
-            .catch((err) => {
-                console.log(err.response);
-            });
-    }, []);
+  useEffect(() => {
+    apiClasses
+      .showClasses()
+      .then((res) => {
+        const apiClasses = res.data;
+        setClasses(apiClasses);
+        console.log(classes);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  }, []);
 
-    const handleMouseEnter = () => {
-        setShowClasses(true);
-    };
+  const handleMouseEnter = () => {
+    setShowClasses(true);
+  };
 
-    const handleMouseLeave = () => {
-        setShowClasses(false);
-    };
+  const handleMouseLeave = () => {
+    setShowClasses(false);
+  };
 
-    return (
-        <HeaderContainer>
-            <Logo>Programmy</Logo>
-            <Navigation>
-                <NavItem to="/">Home</NavItem>
-                <NavItem to="/students/register">Registro</NavItem>
-                <NavItem
-                    to="/classes"
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                >
-                    Turmas
-                    {showClasses && (
-                        <Dropdown>
-                            {classes.map((classItem) => (
-                                <DropdownItem
-                                    key={classItem.id}
-                                    to={`/classes/${classItem.id}`}>
-                                    {classItem.code}
-                                </DropdownItem>
-                            ))}
-                        </Dropdown>
-                    )}
-                </NavItem>
-                <NavItem to="/projects">Projetos</NavItem>
-            </Navigation>
-        </HeaderContainer>
-    );
+  return (
+    <HeaderContainer>
+      <Logo>Programmy</Logo>
+      <Navigation>
+        <NavItem to="/">Home</NavItem>
+        <NavItem to="/students/register">Registro</NavItem>
+        <NavItem
+          to="/classes"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          Turmas
+          {showClasses && (
+            <Dropdown>
+              {classes.map((classItem) => (
+                <DropdownItem
+                  key={classItem.id}
+                  to={`/classes/${classItem.id}`}>
+                  {classItem.code}
+                </DropdownItem>
+              ))}
+            </Dropdown>
+          )}
+        </NavItem>
+        <NavItem to="/submit">Projetos</NavItem>
+      </Navigation>
+    </HeaderContainer>
+  );
 };
 
 const HeaderContainer = styled.header`
@@ -98,6 +98,7 @@ const Dropdown = styled.div`
   font-family: "Roboto";
   width: 100%;
   border-radius: 5px;
+  text-align: center;
   gap: 5px;
   top: 100%;
   left: 0;

@@ -116,7 +116,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: calc(100vh - 60px);
-  background-color: #f3f3f3;
+  background-color: #f8f8f8;
 `;
 
 const FormWrapper = styled.div`
